@@ -41,7 +41,7 @@ const webpackConfig = {
         test: /\.(jsx|js)$/,
         include: srcPath,
         exclude: /node_modules/,
-        loaders: ['react-hot', 'babel', 'eslint']
+        loaders: ['react-hot', 'babel']
       },
       {
         test: /\.json$/,
