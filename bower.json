@@ -1,0 +1,27 @@
+{
+  "name": "react-bootstrap-boilerplate",
+  "description": "Boilerplate app for bootstrap with React",
+  "main": "index.js",
+  "authors": [
+    "Ray Guo"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "bootstrap",
+    "redux",
+    "boilerplate"
+  ],
+  "homepage": "https://github.com/1233443/node-express-react-admin",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "jquery": "^3.1.1",
+    "bootstrap": "^3.3.7"
+  }
+}

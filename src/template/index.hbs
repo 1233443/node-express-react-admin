@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheent" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" />	
   {{#if htmlWebpackPlugin.options.isWebpack}}
   <title>{{htmlWebpackPlugin.options.title}}</title>
   {{else}}
@@ -17,9 +18,9 @@
 </head>
 <body>
   {{#if htmlWebpackPlugin.options.isWebpack}}
-  <div id="container"></div>
+  <div id="container" class="container"></div>
   {{else}}
-  <div id="container">{{{body}}}</div>
+  <div id="container" class="container">{{{body}}}</div>
   <script>window.__INITIAL_STATE__ = {{{state}}}</script>
   <script type="text/javascript" src="{{{assets.javascript.main}}}"></script>
   {{/if}}

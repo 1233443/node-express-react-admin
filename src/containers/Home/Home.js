@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
+import {Link} from "react-router";
 import { showHello, showHelloAsync, showMoviesAsync } from '../../actions/home';
 import logoImg from '../../assets/images/logo.jpg';
 import config from '../../config';
@@ -28,10 +29,39 @@ class Home extends React.Component {
 
   render() {
     const styles = require('./Home.css');
-
     const { home } = this.props;
+    
     return (
-      <div className={styles.main}>
+    	<div className="index home">
+    		<div className="panel panel-danger">
+				  <div className="panel-heading">Panel heading without title</div>
+				  <div className="panel-body">
+				    Panel content
+				  </div>
+				</div>
+    	</div>
+    );
+  }
+}
+Home.fetchData = ({ store }) => {
+  const fetch = Promise.all([
+    store.dispatch(showHelloAsync('This is the content of')),
+    store.dispatch(showMoviesAsync()),
+    store.dispatch(showHello('Dispatch showHello action'))
+  ]);
+  return fetch;
+};
+
+const mapStateToProps = (state) => {
+  const select = {
+    home: state.home
+  };
+  return select;
+};
+
+export default connect(mapStateToProps)(Home);
+/*
+ <div className={styles.main}>
         <Helmet title={config.app.title} />
         <div className={styles.masthead}>
           <div className="container">
@@ -59,24 +89,5 @@ class Home extends React.Component {
         </div>
 
       </div>
-    );
-  }
-}
-
-Home.fetchData = ({ store }) => {
-  const fetch = Promise.all([
-    store.dispatch(showHelloAsync('This is the content of')),
-    store.dispatch(showMoviesAsync()),
-    store.dispatch(showHello('Dispatch showHello action'))
-  ]);
-  return fetch;
-};
-
-const mapStateToProps = (state) => {
-  const select = {
-    home: state.home
-  };
-  return select;
-};
-
-export default connect(mapStateToProps)(Home);
+ * 
+ * */
