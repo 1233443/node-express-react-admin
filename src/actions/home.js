@@ -1,9 +1,9 @@
 import { createAction, createActionAsync } from 'redux-act-reducer';
 import request from 'hahoorequest/lib/fetch';
-
 export const SHOW_HELLO = 'SHOW_HELLO';
 export const SHOW_HELLO_ASYNC = 'SHOW_HELLO_ASYNC';
 export const SHOW_MOVIES_ASYNC = 'SHOW_MOVIES_ASYNC';
+
 
 const showHelloApi = (name) => {
   const result = new Promise((resolve) => {

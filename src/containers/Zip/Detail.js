@@ -2,7 +2,7 @@ import React from 'react';
 import { IndexLink } from 'react-router';
 
 
-class DogDetail extends React.Component {
+class ZipDetail extends React.Component {
   static propTypes = {
     children: React.PropTypes.element,
   };
@@ -13,9 +13,9 @@ class DogDetail extends React.Component {
   
   render() {
     return (
-    	<div className="index dog-list">
+    	<div className="index zip-list">
     		<div className="panel panel-danger">
-				  <div className="panel-heading">dog detail</div>
+				  <div className="panel-heading">zip detail</div>
 				  <div className="panel-body">
 				    Panel content
 				  </div>
@@ -25,4 +25,4 @@ class DogDetail extends React.Component {
   }
 }
 
-export default DogDetail;
+export default ZipDetail;

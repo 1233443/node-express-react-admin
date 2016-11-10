@@ -5,5 +5,6 @@ module.exports = {
   hotLoadPort: process.env.HOT_LOAD_PORT || 3005,
   app: {
     title: 'My App'
-  }
+  },
+  urlHost:"http://localhost:3003"
 };

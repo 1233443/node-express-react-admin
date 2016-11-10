@@ -46,7 +46,7 @@ app.use((req, res) => {
     const components = renderProps.components;
     const Comp = components[components.length - 1].WrappedComponent;
     const fetchData = (Comp && Comp.fetchData) || (() => Promise.resolve());
-
+		
     const store = configureStore();
     const { location, params, history } = renderProps;
 
@@ -61,7 +61,7 @@ app.use((req, res) => {
       const head = Helmet.rewind();
 
       const state = store.getState();
-
+			console.log(state);
       const data = {
         title: head.title.toString(),
         meta: head.meta.toString(),

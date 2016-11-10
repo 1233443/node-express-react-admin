@@ -30,7 +30,6 @@ class Home extends React.Component {
   render() {
     const styles = require('./Home.css');
     const { home } = this.props;
-    
     return (
     	<div className="index home">
     		<div className="panel panel-danger">
@@ -58,7 +57,6 @@ const mapStateToProps = (state) => {
   };
   return select;
 };
-
 export default connect(mapStateToProps)(Home);
 /*
  <div className={styles.main}>
