@@ -2,16 +2,43 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import {Link} from "react-router";
-import {UploadManager,UploadHandle} from 'react-file-uploader';
+import Upload from 'rc-upload';
 
 import {addZipAsync } from '../../actions/zip';
 import config from '../../config';
 
 class ZipAdd extends React.Component {
+	
   static propTypes = {
     dispatch: React.PropTypes.func,
    	zip: React.PropTypes.object,
   };
+  
+  static defaultProps={
+  	uploaderProps:{
+  		action: 'http://localhost:3003/dog/add',
+      multiple: true,
+      beforeUpload(file) {
+        console.log('beforeUpload', file.name);
+      },
+      onStart: (file) => {
+        console.log('onStart', file.name);
+        // this.refs.inner.abort(file);
+      },
+      onSuccess(file) {
+        console.log('onSuccess', file);
+      },
+      onProgress(step, file) {
+        console.log('onProgress', Math.round(step.percent), file.name);
+      },
+      onError(err) {
+        console.log('onError', err);
+      },
+  	}
+  }
+  state={
+  	destroyed: false,
+  }
   handleClick(){
   	var data={};
   	var title=this.refs.title.value.trim();
@@ -44,6 +71,7 @@ class ZipAdd extends React.Component {
     		<div className="panel panel-danger">
 				  <div className="panel-heading">Add</div>
 				  <div className="panel-body">
+				  <Upload {...this.props.uploaderProps} ref="inner">开始上传</Upload>
 					   <form className="form-horizontal" role="form">
 							  <div className="form-group">
 							    <label className="col-sm-2 control-label">包名:</label>

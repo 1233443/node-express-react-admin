@@ -12,11 +12,14 @@ let params = function (data) {
 };
 
 export function send(api, data, method = 'POST') {
+	//application/x-www-form-urlencoded;charset=UTF-8
+	//multipart/form-data主要就是我们上传的非文本的内容，
+	//　text/plain是纯文本传输的意思，在发邮件的时候要设置这种编码类型
     var option = {
         method: method,
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+            'Content-Type': 'multipart/form-data'
         }
     };
     /*if (getCookie(`${projectName}Token`))

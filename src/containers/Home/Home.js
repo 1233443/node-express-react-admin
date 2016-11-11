@@ -11,7 +11,6 @@ class Home extends React.Component {
     dispatch: React.PropTypes.func,
     home: React.PropTypes.object,
   };
-
   state = {}
 
   componentDidMount() {

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="jquery.min.js"></script>
+	</head>
+
+	<body>
+		<form id="uploadForm" enctype="multipart/form-data">
+			<p>指定文件名： <input type="text" name="filename" value="" /></p>
+			<p>上传文件： <input type="file" name="file" /></ p>
+				<input type="button" value="上传" onclick="doUpload()" />
+		</form>
+		<script>
+			function uploadFiles(url, files) {
+				var formData = new FormData();
+
+				for(var i = 0, file; file = files[i]; ++i) {
+					formData.append(file.name, file); // 可加入第三个参数，表示文件名
+				}
+
+				var xhr = new XMLHttpRequest();
+				xhr.open('POST', url, true);
+				xhr.onload = function(e) {
+				};
+
+				xhr.send(formData); // multipart/form-data
+			}
+
+			document.querySelector('input[type="file"]').addEventListener('change', function(e) {
+				console.log(this.files);
+			}, false);
+		</script>
+	</body>
+
+</html>
