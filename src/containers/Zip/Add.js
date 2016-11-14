@@ -8,49 +8,58 @@ import {addZipAsync } from '../../actions/zip';
 import config from '../../config';
 
 class ZipAdd extends React.Component {
-	
   static propTypes = {
     dispatch: React.PropTypes.func,
    	zip: React.PropTypes.object,
   };
-  
+  static contextTypes={
+   	router: React.PropTypes.object
+	}
   static defaultProps={
   	uploaderProps:{
-  		action: 'http://localhost:3003/dog/add',
-      multiple: true,
-      beforeUpload(file) {
-        console.log('beforeUpload', file.name);
-      },
-      onStart: (file) => {
-        console.log('onStart', file.name);
-        // this.refs.inner.abort(file);
-      },
-      onSuccess(file) {
-        console.log('onSuccess', file);
-      },
+  		action: 'http://localhost:3003/zip/add',
+        multiple: false,
+        beforeUpload(file) {
+       // console.log('beforeUpload', file.name);
+      	},
+	    onStart: (file) => {
+	       //console.log('onStart', file.name);
+	       // this.refs.inner.abort(file);
+	    },
       onProgress(step, file) {
-        console.log('onProgress', Math.round(step.percent), file.name);
+        //console.log('onProgress', Math.round(step.percent), file.name);
       },
       onError(err) {
-        console.log('onError', err);
+       // console.log('onError', err);
       },
   	}
   }
   state={
-  	destroyed: false,
+  	fileUrl:""
+  }
+  onSuccess(file){
+    console.log('onSuccess', file);
+    if(file.status==0){
+    	this.setState({fileUrl:file.url});
+    }else{
+    	alert("上传失败");
+    }
   }
   handleClick(){
-  	var data={};
-  	var title=this.refs.title.value.trim();
-  	var description=this.refs.description.value.trim();
-  	var content=this.refs.content.value;
+  	var zipName=this.refs.zipName.value.trim();
+  	var zipDesc=this.refs.zipDesc.value.trim();
+  	var zipPackage=this.state.fileUrl;
   	var data={
-  		"title":title,
-  		"description":description,
-  		"content":content
+  		"zipName":zipName,
+  		"zipDesc":zipDesc,
+  		"zipPackage":zipPackage
   	}
-  	addZipAsync(data).then(function(data){
-  		console.log(data);
+  	if((!zipName)||(!zipPackage)){
+  		alert("请填写完数据");
+  		return false;
+  	}
+  	addZipAsync(data).then((data)=>{
+  		this.context.router.push("/zipList");
   	})
   }
   change(){
@@ -63,7 +72,6 @@ class ZipAdd extends React.Component {
   upload(){}
   uploadProgress(){}
   uploadEnd(){
-  	
   }
   render() {
     return (
@@ -71,24 +79,23 @@ class ZipAdd extends React.Component {
     		<div className="panel panel-danger">
 				  <div className="panel-heading">Add</div>
 				  <div className="panel-body">
-				  <Upload {...this.props.uploaderProps} ref="inner">开始上传</Upload>
-					   <form className="form-horizontal" role="form">
+					   	<form className="form-horizontal" role="form" ref="form">
 							  <div className="form-group">
 							    <label className="col-sm-2 control-label">包名:</label>
 							    <div className="col-sm-10">
-							      <input type="text" className="form-control" placeholder="请输入包名" ref="title" />
+							      <input type="text" className="form-control" placeholder="请输入包名（必填）" ref="zipName" name="zipName" />
 							    </div>
 							  </div>
 							  <div className="form-group">
 							    <label className="col-sm-2 control-label">描述:</label>
 							    <div className="col-sm-10">
-							      <input type="text" className="form-control" placeholder="请输入包名" ref="description" onClick={this.change.bind(this)}/>
+							      <input type="text" className="form-control" placeholder="请输入包名" ref="zipDesc" name="zipDesc"/>
 							    </div>
 							  </div>
 							  <div className="form-group">
 							    <label className="col-sm-2 control-label">上传包:</label>
 							    <div className="col-sm-10">
-							      <input type="file" ref="content" className="form-control"/>
+				  					<Upload {...this.props.uploaderProps} ref="inner" onSuccess={this.onSuccess.bind(this)}>开始上传</Upload>
 							    </div>
 							  </div>
 							  <div className="form-group">

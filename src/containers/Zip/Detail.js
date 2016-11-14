@@ -6,11 +6,9 @@ class ZipDetail extends React.Component {
   static propTypes = {
     children: React.PropTypes.element,
   };
-  
   state = {
     navExpanded: false
   }
-  
   render() {
     return (
     	<div className="index zip-list">

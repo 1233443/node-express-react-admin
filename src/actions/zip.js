@@ -26,5 +26,14 @@ export const addZipAsync=(data)=>{
 	});
 	return result;
 }
+export const deleteApiAsync=(id)=>{
+	const result=new Promise((resolve)=>{
+		var promise=ZipServer.deleteZip(id);
+		promise.then(function(data){
+			resolve(data);
+		});
+	});
+	return result;
+}
 
 export const listZipAsync = createActionAsync(LISTZIP,listZipApi);
