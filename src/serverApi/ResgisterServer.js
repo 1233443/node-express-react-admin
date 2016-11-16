@@ -1,7 +1,7 @@
 import {send} from "./BasicServer";
 
 export const addResgister = (data) => {
-	var api = `/user/register`;
+	var api = `/admin/user/register`;
 	return send(api, data, "POST");
 }
 export default {

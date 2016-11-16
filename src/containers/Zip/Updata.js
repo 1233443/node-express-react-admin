@@ -4,10 +4,11 @@ import Helmet from 'react-helmet';
 import {Link} from "react-router";
 import Upload from 'rc-upload';
 
-import {addZipAsync } from '../../actions/zip';
+
+import {updataZipApi,detailZipAsync} from '../../actions/zip';
 import config from '../../config';
 
-class ZipAdd extends React.Component {
+class ZipUpdata extends React.Component {
   static propTypes = {
     dispatch: React.PropTypes.func,
    	zip: React.PropTypes.object,
@@ -17,7 +18,7 @@ class ZipAdd extends React.Component {
 	}
   static defaultProps={
   	uploaderProps:{
-  		action: 'http://localhost:3003/admin/zip/add',
+  		action: 'http://localhost:3003/adminzip/add',
         multiple: false,
         beforeUpload(file) {
        // console.log('beforeUpload', file.name);
@@ -37,7 +38,16 @@ class ZipAdd extends React.Component {
   state={
   	fileUrl:""
   }
+  componentDidMount(){
+  	const { dispatch } = this.props;
+  	var id=this.context.router.params.id;
+  	var data={id:id};
+    if(!this.props.zip.isDetailFetching){
+    	dispatch(detailZipAsync(data));
+    }
+  }
   onSuccess(file){
+    console.log('onSuccess', file);
     if(file.status==0){
     	this.setState({fileUrl:file.url});
     }else{
@@ -47,8 +57,9 @@ class ZipAdd extends React.Component {
   handleClick(){
   	var zipName=this.refs.zipName.value.trim();
   	var zipDesc=this.refs.zipDesc.value.trim();
-  	var zipPackage=this.state.fileUrl;
+  	var zipPackage=this.state.fileUrl||this.refs.zipPackage.props.defaultValue;
   	var data={
+  		"id":this.props.zip.detail.result.id,
   		"zipName":zipName,
   		"zipDesc":zipDesc,
   		"zipPackage":zipPackage
@@ -57,50 +68,46 @@ class ZipAdd extends React.Component {
   		alert("请填写完数据");
   		return false;
   	}
-  	addZipAsync(data).then((data)=>{
-  		this.context.router.push("/zipList");
+  	updataZipApi(data).then(data=>{	
+  		if(data.status==0){
+  			this.context.router.push("/zipList");
+  		}
   	})
-  } 
-  componentWillReceiveProps(nextProps) {
-		this.setState({
-		    fileUrl: nextProps.fileUrl,
-		})
-	}
-  change(){
-  	alert("aa");
-  }
-  upload(url, file) {
-  	alert("aa");
-    // your codes here
-	}
-  upload(){}
-  uploadProgress(){}
-  uploadEnd(){
   }
   render() {
+  	const {detail}=this.props.zip;
+  	console.log(detail);
     return (
-    	<div className="index addzip">
+    	<div className="index updatazip">
     		<div className="panel panel-danger">
-				  <div className="panel-heading">Add</div>
+				  <div className="panel-heading">修改</div>
 				  <div className="panel-body">
 					   	<form className="form-horizontal" role="form" ref="form">
 							  <div className="form-group">
 							    <label className="col-sm-2 control-label">包名:</label>
 							    <div className="col-sm-10">
-							      <input type="text" className="form-control" placeholder="请输入包名（必填）" ref="zipName" name="zipName" />
+								    {
+								    	detail&&<input type="text" className="form-control" placeholder="请输入包名（必填）" ref="zipName" name="zipName" defaultValue={detail.result.title}/>
+								    }
 							    </div>
 							  </div>
 							  <div className="form-group">
 							    <label className="col-sm-2 control-label">描述:</label>
 							    <div className="col-sm-10">
-							      <input type="text" className="form-control" placeholder="请输入包名" ref="zipDesc" name="zipDesc"/>
+							    {
+							    	detail&& <input type="text" className="form-control" placeholder="请输入包名" ref="zipDesc" name="zipDesc"  defaultValue={detail.result.description}/>
+							    }
 							    </div>
 							  </div>
 							  <div className="form-group">
 							    <label className="col-sm-2 control-label">上传包:</label>
 							    <div className="col-sm-10">
-				  					<Upload {...this.props.uploaderProps} ref="inner" onSuccess={this.onSuccess.bind(this)}>开始上传</Upload>
-				  					{this.state.fileUrl&&<div>{this.state.fileUrl}.zip</div>}
+								    {
+								    	detail&&<Upload {...this.props.uploaderProps} ref="inner" onSuccess={this.onSuccess.bind(this)} defaultValue={detail.result.url} ref="zipPackage">开始上传</Upload>
+								    }
+								    {
+								    	detail&&<div>{this.state.fileUrl||detail.result.url}.zip</div>
+								    }
 							    </div>
 							  </div>
 							  <div className="form-group">
@@ -115,12 +122,12 @@ class ZipAdd extends React.Component {
     );
   }
 }
-/*ZipAdd.fetchData = ({ store }) => {
+ZipUpdata.fetchData = ({ store }) => {
   const fetch = Promise.all([
-    store.dispatch(listZipAsync()),
+    store.dispatch(detailZipAsync()),
   ]);
   return fetch;
-};*/
+};
 
 const mapStateToProps = (state) => {
   const select = {
@@ -129,4 +136,4 @@ const mapStateToProps = (state) => {
   return select;
 };
 
-export default connect(mapStateToProps)(ZipAdd);
+export default connect(mapStateToProps)(ZipUpdata);

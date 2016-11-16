@@ -43,8 +43,6 @@ export function send(api, data, method = 'POST', isFile) {
 			option.body = params(data);
 		}
 	}
-	console.log(config.urlHost + api);
-	console.log("dfc");
 	return new Promise((resolve, reject) => {
 		fetch(config.urlHost + api, option)
 			.then(response => {

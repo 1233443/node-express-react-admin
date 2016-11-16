@@ -9,6 +9,9 @@ class ZipList extends React.Component {
     dispatch: React.PropTypes.func,
    	zip: React.PropTypes.object,
   };
+  static contextTypes={
+   	router: React.PropTypes.object
+	}
   state = {}
   componentDidMount() {
     const { dispatch } = this.props;
@@ -20,12 +23,14 @@ class ZipList extends React.Component {
     return this.props.zip !== nextProps.zip;
   }
   del(id){
-  	deleteApiAsync(id).then(function(data){
-  		console.log(data);
+  	deleteApiAsync(id).then(data=>{
+  		if(data.status==0){
+  			this.context.router.push("/zipList");
+  		}
   	});
   }
  	updata(id){
- 		alert(id);
+  	this.context.router.push("/zipUpdata/"+id);
  	}
   render() {
     const { data } = this.props.zip;

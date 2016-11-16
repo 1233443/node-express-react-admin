@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-import { App, Home, NotFound,ZipList,ZipDetail,ZipAdd,Register,Login} from '../containers';
+import { App, Home, NotFound,ZipList,ZipDetail,ZipAdd,ZipUpdata,Register,Login} from '../containers';
 import { About } from '../components';
 
 export default function Routes() {
@@ -12,6 +12,7 @@ export default function Routes() {
       <Route path="register" component={Register} />
       <Route path="zipList" component={ZipList} />
       <Route path="zipDetail" component={ZipDetail} />
+      <Route path="ZipUpdata/:id" component={ZipUpdata} />
       <Route path="zipAdd" component={ZipAdd} />
       <Route path="*" component={NotFound} status={404} />
     </Route>
