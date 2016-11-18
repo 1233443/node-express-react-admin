@@ -20,7 +20,10 @@ class ZipAdd extends React.Component {
   		action: 'http://localhost:3003/admin/zip/add',
         multiple: false,
         beforeUpload(file) {
-       // console.log('beforeUpload', file.name);
+        if(file.name.indexOf(".zip")==-1){
+        	alert("对不起，只能上传.zip的文件");
+        	return false;
+        };
       	},
 	    onStart: (file) => {
 	       //console.log('onStart', file.name);
