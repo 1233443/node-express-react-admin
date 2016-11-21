@@ -22,10 +22,12 @@ class ZipList extends React.Component {
   shouldComponentUpdate(nextProps) {
     return this.props.zip !== nextProps.zip;
   }
-  del(id){
+  del(id,index){
+    const { dispatch } = this.props;
   	deleteApiAsync(id).then(data=>{
   		if(data.status==0){
-  			this.context.router.push("/zipList");
+  			dispatch(listZipAsync());
+  			//this.context.router.push("/zipList");
   		}
   	});
   }
@@ -64,7 +66,7 @@ class ZipList extends React.Component {
 											                        <span className="glyphicon glyphicon-edit"></span>
 											                    </button>
 											                </a>|
-														 					<a href="javascript:;" title="删除" onClick={this.del.bind(this,item.id)}>
+														 					<a href="javascript:;" title="删除" onClick={this.del.bind(this,item.id,index)}>
 																				<button className="btn btn-danger btn-xs">
 																					<span className="glyphicon glyphicon-trash"></span>
 																				</button>

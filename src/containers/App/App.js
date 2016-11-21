@@ -11,7 +11,6 @@ class App extends React.Component {
   }
   render() {
     require('./App.css');
-
     return (
       <div className="app">
       		<Header>玩赚天津zip包</Header>

@@ -8,6 +8,9 @@ class Login extends React.Component {
   static propTypes = {
     dispatch: React.PropTypes.func,
   };
+  static contextTypes={
+   	router: React.PropTypes.object
+	}
   login(){
   	var username=this.refs.username.value.trim();
   	var password=this.refs.password.value.trim();
@@ -15,11 +18,12 @@ class Login extends React.Component {
   		"username":username,
   		"password":password
   	};
-  	loginInApi(data).then(function(data){
+  	loginInApi(data).then(data=>{
   		if(data.status==-1){
   			alert("用户名或密码不正确，请重新登录")
   		}else{
-  			alert("登录成功");
+  				sessionStorage.setItem("status","1");
+  				this.context.router.push("/");
   		}
   	})
   }

@@ -6,7 +6,8 @@ import { About } from '../components';
 export default function Routes() {
   return (
     <Route path="/" component={App}>
-      <IndexRoute component={Home} />
+      <IndexRoute component={Login} />
+      <Route path="home" component={Home} />
       <Route path="about" component={About} />
       <Route path="login" component={Login} />
       <Route path="register" component={Register} />
